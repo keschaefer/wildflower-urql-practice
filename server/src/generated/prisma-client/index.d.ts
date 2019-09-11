@@ -16,7 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
-  link: (where?: LinkWhereInput) => Promise<boolean>;
+  flower: (where?: FlowerWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
   vote: (where?: VoteWhereInput) => Promise<boolean>;
 }
@@ -40,25 +40,25 @@ export interface Prisma {
    * Queries
    */
 
-  link: (where: LinkWhereUniqueInput) => LinkNullablePromise;
-  links: (args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  flower: (where: FlowerWhereUniqueInput) => FlowerNullablePromise;
+  flowers: (args?: {
+    where?: FlowerWhereInput;
+    orderBy?: FlowerOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<Link>;
-  linksConnection: (args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  }) => FragmentableArray<Flower>;
+  flowersConnection: (args?: {
+    where?: FlowerWhereInput;
+    orderBy?: FlowerOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => LinkConnectionPromise;
+  }) => FlowerConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -103,22 +103,22 @@ export interface Prisma {
    * Mutations
    */
 
-  createLink: (data: LinkCreateInput) => LinkPromise;
-  updateLink: (args: {
-    data: LinkUpdateInput;
-    where: LinkWhereUniqueInput;
-  }) => LinkPromise;
-  updateManyLinks: (args: {
-    data: LinkUpdateManyMutationInput;
-    where?: LinkWhereInput;
+  createFlower: (data: FlowerCreateInput) => FlowerPromise;
+  updateFlower: (args: {
+    data: FlowerUpdateInput;
+    where: FlowerWhereUniqueInput;
+  }) => FlowerPromise;
+  updateManyFlowers: (args: {
+    data: FlowerUpdateManyMutationInput;
+    where?: FlowerWhereInput;
   }) => BatchPayloadPromise;
-  upsertLink: (args: {
-    where: LinkWhereUniqueInput;
-    create: LinkCreateInput;
-    update: LinkUpdateInput;
-  }) => LinkPromise;
-  deleteLink: (where: LinkWhereUniqueInput) => LinkPromise;
-  deleteManyLinks: (where?: LinkWhereInput) => BatchPayloadPromise;
+  upsertFlower: (args: {
+    where: FlowerWhereUniqueInput;
+    create: FlowerCreateInput;
+    update: FlowerUpdateInput;
+  }) => FlowerPromise;
+  deleteFlower: (where: FlowerWhereUniqueInput) => FlowerPromise;
+  deleteManyFlowers: (where?: FlowerWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -156,9 +156,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  link: (
-    where?: LinkSubscriptionWhereInput
-  ) => LinkSubscriptionPayloadSubscription;
+  flower: (
+    where?: FlowerSubscriptionWhereInput
+  ) => FlowerSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -175,15 +175,21 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type LinkOrderByInput =
+export type FlowerOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "color_ASC"
+  | "color_DESC"
+  | "location_ASC"
+  | "location_DESC"
   | "description_ASC"
   | "description_DESC"
-  | "url_ASC"
-  | "url_DESC";
+  | "img_ASC"
+  | "img_DESC";
 
 export type VoteOrderByInput = "id_ASC" | "id_DESC";
 
@@ -194,21 +200,23 @@ export type UserOrderByInput =
   | "name_DESC"
   | "email_ASC"
   | "email_DESC"
+  | "homeState_ASC"
+  | "homeState_DESC"
   | "password_ASC"
   | "password_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserUpdateOneWithoutLinksInput {
-  create?: Maybe<UserCreateWithoutLinksInput>;
-  update?: Maybe<UserUpdateWithoutLinksDataInput>;
-  upsert?: Maybe<UserUpsertWithoutLinksInput>;
+export interface UserUpdateOneWithoutFlowersInput {
+  create?: Maybe<UserCreateWithoutFlowersInput>;
+  update?: Maybe<UserUpdateWithoutFlowersDataInput>;
+  upsert?: Maybe<UserUpsertWithoutFlowersInput>;
   delete?: Maybe<Boolean>;
   disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export type LinkWhereUniqueInput = AtLeastOne<{
+export type FlowerWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -217,7 +225,7 @@ export interface VoteUpdateWithWhereUniqueWithoutUserInput {
   data: VoteUpdateWithoutUserDataInput;
 }
 
-export interface LinkWhereInput {
+export interface FlowerWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -240,6 +248,48 @@ export interface LinkWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  color?: Maybe<String>;
+  color_not?: Maybe<String>;
+  color_in?: Maybe<String[] | String>;
+  color_not_in?: Maybe<String[] | String>;
+  color_lt?: Maybe<String>;
+  color_lte?: Maybe<String>;
+  color_gt?: Maybe<String>;
+  color_gte?: Maybe<String>;
+  color_contains?: Maybe<String>;
+  color_not_contains?: Maybe<String>;
+  color_starts_with?: Maybe<String>;
+  color_not_starts_with?: Maybe<String>;
+  color_ends_with?: Maybe<String>;
+  color_not_ends_with?: Maybe<String>;
+  location?: Maybe<String>;
+  location_not?: Maybe<String>;
+  location_in?: Maybe<String[] | String>;
+  location_not_in?: Maybe<String[] | String>;
+  location_lt?: Maybe<String>;
+  location_lte?: Maybe<String>;
+  location_gt?: Maybe<String>;
+  location_gte?: Maybe<String>;
+  location_contains?: Maybe<String>;
+  location_not_contains?: Maybe<String>;
+  location_starts_with?: Maybe<String>;
+  location_not_starts_with?: Maybe<String>;
+  location_ends_with?: Maybe<String>;
+  location_not_ends_with?: Maybe<String>;
   description?: Maybe<String>;
   description_not?: Maybe<String>;
   description_in?: Maybe<String[] | String>;
@@ -254,31 +304,31 @@ export interface LinkWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
-  url?: Maybe<String>;
-  url_not?: Maybe<String>;
-  url_in?: Maybe<String[] | String>;
-  url_not_in?: Maybe<String[] | String>;
-  url_lt?: Maybe<String>;
-  url_lte?: Maybe<String>;
-  url_gt?: Maybe<String>;
-  url_gte?: Maybe<String>;
-  url_contains?: Maybe<String>;
-  url_not_contains?: Maybe<String>;
-  url_starts_with?: Maybe<String>;
-  url_not_starts_with?: Maybe<String>;
-  url_ends_with?: Maybe<String>;
-  url_not_ends_with?: Maybe<String>;
+  img?: Maybe<String>;
+  img_not?: Maybe<String>;
+  img_in?: Maybe<String[] | String>;
+  img_not_in?: Maybe<String[] | String>;
+  img_lt?: Maybe<String>;
+  img_lte?: Maybe<String>;
+  img_gt?: Maybe<String>;
+  img_gte?: Maybe<String>;
+  img_contains?: Maybe<String>;
+  img_not_contains?: Maybe<String>;
+  img_starts_with?: Maybe<String>;
+  img_not_starts_with?: Maybe<String>;
+  img_ends_with?: Maybe<String>;
+  img_not_ends_with?: Maybe<String>;
   postedBy?: Maybe<UserWhereInput>;
   votes_every?: Maybe<VoteWhereInput>;
   votes_some?: Maybe<VoteWhereInput>;
   votes_none?: Maybe<VoteWhereInput>;
-  AND?: Maybe<LinkWhereInput[] | LinkWhereInput>;
-  OR?: Maybe<LinkWhereInput[] | LinkWhereInput>;
-  NOT?: Maybe<LinkWhereInput[] | LinkWhereInput>;
+  AND?: Maybe<FlowerWhereInput[] | FlowerWhereInput>;
+  OR?: Maybe<FlowerWhereInput[] | FlowerWhereInput>;
+  NOT?: Maybe<FlowerWhereInput[] | FlowerWhereInput>;
 }
 
 export interface VoteUpdateWithoutUserDataInput {
-  link?: Maybe<LinkUpdateOneRequiredWithoutVotesInput>;
+  flower?: Maybe<FlowerUpdateOneRequiredWithoutVotesInput>;
 }
 
 export interface VoteWhereInput {
@@ -296,33 +346,33 @@ export interface VoteWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  link?: Maybe<LinkWhereInput>;
+  flower?: Maybe<FlowerWhereInput>;
   user?: Maybe<UserWhereInput>;
   AND?: Maybe<VoteWhereInput[] | VoteWhereInput>;
   OR?: Maybe<VoteWhereInput[] | VoteWhereInput>;
   NOT?: Maybe<VoteWhereInput[] | VoteWhereInput>;
 }
 
-export interface VoteCreateManyWithoutLinkInput {
-  create?: Maybe<VoteCreateWithoutLinkInput[] | VoteCreateWithoutLinkInput>;
+export interface VoteCreateManyWithoutFlowerInput {
+  create?: Maybe<VoteCreateWithoutFlowerInput[] | VoteCreateWithoutFlowerInput>;
   connect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
 }
 
-export interface LinkUpdateWithWhereUniqueWithoutPostedByInput {
-  where: LinkWhereUniqueInput;
-  data: LinkUpdateWithoutPostedByDataInput;
+export interface FlowerUpdateWithWhereUniqueWithoutPostedByInput {
+  where: FlowerWhereUniqueInput;
+  data: FlowerUpdateWithoutPostedByDataInput;
 }
 
-export interface VoteCreateWithoutLinkInput {
+export interface VoteCreateWithoutFlowerInput {
   id?: Maybe<ID_Input>;
   user: UserCreateOneWithoutVotesInput;
 }
 
-export interface LinkUpdateOneRequiredWithoutVotesInput {
-  create?: Maybe<LinkCreateWithoutVotesInput>;
-  update?: Maybe<LinkUpdateWithoutVotesDataInput>;
-  upsert?: Maybe<LinkUpsertWithoutVotesInput>;
-  connect?: Maybe<LinkWhereUniqueInput>;
+export interface FlowerUpdateOneRequiredWithoutVotesInput {
+  create?: Maybe<FlowerCreateWithoutVotesInput>;
+  update?: Maybe<FlowerUpdateWithoutVotesDataInput>;
+  upsert?: Maybe<FlowerUpsertWithoutVotesInput>;
+  connect?: Maybe<FlowerWhereUniqueInput>;
 }
 
 export interface UserCreateOneWithoutVotesInput {
@@ -345,56 +395,68 @@ export interface UserCreateWithoutVotesInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  homeState: String;
   password: String;
-  links?: Maybe<LinkCreateManyWithoutPostedByInput>;
+  flowers?: Maybe<FlowerCreateManyWithoutPostedByInput>;
 }
 
 export interface VoteUpdateInput {
-  link?: Maybe<LinkUpdateOneRequiredWithoutVotesInput>;
+  flower?: Maybe<FlowerUpdateOneRequiredWithoutVotesInput>;
   user?: Maybe<UserUpdateOneRequiredWithoutVotesInput>;
 }
 
-export interface LinkCreateManyWithoutPostedByInput {
+export interface FlowerCreateManyWithoutPostedByInput {
   create?: Maybe<
-    LinkCreateWithoutPostedByInput[] | LinkCreateWithoutPostedByInput
+    FlowerCreateWithoutPostedByInput[] | FlowerCreateWithoutPostedByInput
   >;
-  connect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
+  connect?: Maybe<FlowerWhereUniqueInput[] | FlowerWhereUniqueInput>;
 }
 
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  homeState?: Maybe<String>;
   password?: Maybe<String>;
 }
 
-export interface LinkCreateWithoutPostedByInput {
+export interface FlowerCreateWithoutPostedByInput {
   id?: Maybe<ID_Input>;
+  name: String;
+  color: String;
+  location: String;
   description: String;
-  url: String;
-  votes?: Maybe<VoteCreateManyWithoutLinkInput>;
+  img: String;
+  votes?: Maybe<VoteCreateManyWithoutFlowerInput>;
 }
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  homeState?: Maybe<String>;
   password?: Maybe<String>;
-  links?: Maybe<LinkUpdateManyWithoutPostedByInput>;
+  flowers?: Maybe<FlowerUpdateManyWithoutPostedByInput>;
   votes?: Maybe<VoteUpdateManyWithoutUserInput>;
 }
 
-export interface LinkUpdateInput {
+export interface FlowerUpdateInput {
+  name?: Maybe<String>;
+  color?: Maybe<String>;
+  location?: Maybe<String>;
   description?: Maybe<String>;
-  url?: Maybe<String>;
-  postedBy?: Maybe<UserUpdateOneWithoutLinksInput>;
-  votes?: Maybe<VoteUpdateManyWithoutLinkInput>;
+  img?: Maybe<String>;
+  postedBy?: Maybe<UserUpdateOneWithoutFlowersInput>;
+  votes?: Maybe<VoteUpdateManyWithoutFlowerInput>;
 }
 
-export interface LinkUpdateManyMutationInput {
+export interface FlowerUpdateManyMutationInput {
+  name?: Maybe<String>;
+  color?: Maybe<String>;
+  location?: Maybe<String>;
   description?: Maybe<String>;
-  url?: Maybe<String>;
+  img?: Maybe<String>;
 }
 
-export interface LinkScalarWhereInput {
+export interface FlowerScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -417,6 +479,48 @@ export interface LinkScalarWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  color?: Maybe<String>;
+  color_not?: Maybe<String>;
+  color_in?: Maybe<String[] | String>;
+  color_not_in?: Maybe<String[] | String>;
+  color_lt?: Maybe<String>;
+  color_lte?: Maybe<String>;
+  color_gt?: Maybe<String>;
+  color_gte?: Maybe<String>;
+  color_contains?: Maybe<String>;
+  color_not_contains?: Maybe<String>;
+  color_starts_with?: Maybe<String>;
+  color_not_starts_with?: Maybe<String>;
+  color_ends_with?: Maybe<String>;
+  color_not_ends_with?: Maybe<String>;
+  location?: Maybe<String>;
+  location_not?: Maybe<String>;
+  location_in?: Maybe<String[] | String>;
+  location_not_in?: Maybe<String[] | String>;
+  location_lt?: Maybe<String>;
+  location_lte?: Maybe<String>;
+  location_gt?: Maybe<String>;
+  location_gte?: Maybe<String>;
+  location_contains?: Maybe<String>;
+  location_not_contains?: Maybe<String>;
+  location_starts_with?: Maybe<String>;
+  location_not_starts_with?: Maybe<String>;
+  location_ends_with?: Maybe<String>;
+  location_not_ends_with?: Maybe<String>;
   description?: Maybe<String>;
   description_not?: Maybe<String>;
   description_in?: Maybe<String[] | String>;
@@ -431,39 +535,43 @@ export interface LinkScalarWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
-  url?: Maybe<String>;
-  url_not?: Maybe<String>;
-  url_in?: Maybe<String[] | String>;
-  url_not_in?: Maybe<String[] | String>;
-  url_lt?: Maybe<String>;
-  url_lte?: Maybe<String>;
-  url_gt?: Maybe<String>;
-  url_gte?: Maybe<String>;
-  url_contains?: Maybe<String>;
-  url_not_contains?: Maybe<String>;
-  url_starts_with?: Maybe<String>;
-  url_not_starts_with?: Maybe<String>;
-  url_ends_with?: Maybe<String>;
-  url_not_ends_with?: Maybe<String>;
-  AND?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
-  OR?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
-  NOT?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
+  img?: Maybe<String>;
+  img_not?: Maybe<String>;
+  img_in?: Maybe<String[] | String>;
+  img_not_in?: Maybe<String[] | String>;
+  img_lt?: Maybe<String>;
+  img_lte?: Maybe<String>;
+  img_gt?: Maybe<String>;
+  img_gte?: Maybe<String>;
+  img_contains?: Maybe<String>;
+  img_not_contains?: Maybe<String>;
+  img_starts_with?: Maybe<String>;
+  img_not_starts_with?: Maybe<String>;
+  img_ends_with?: Maybe<String>;
+  img_not_ends_with?: Maybe<String>;
+  AND?: Maybe<FlowerScalarWhereInput[] | FlowerScalarWhereInput>;
+  OR?: Maybe<FlowerScalarWhereInput[] | FlowerScalarWhereInput>;
+  NOT?: Maybe<FlowerScalarWhereInput[] | FlowerScalarWhereInput>;
 }
 
 export type VoteWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface UserUpdateWithoutLinksDataInput {
+export interface UserUpdateWithoutFlowersDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  homeState?: Maybe<String>;
   password?: Maybe<String>;
   votes?: Maybe<VoteUpdateManyWithoutUserInput>;
 }
 
-export interface LinkUpdateManyDataInput {
+export interface FlowerUpdateManyDataInput {
+  name?: Maybe<String>;
+  color?: Maybe<String>;
+  location?: Maybe<String>;
   description?: Maybe<String>;
-  url?: Maybe<String>;
+  img?: Maybe<String>;
 }
 
 export interface VoteUpdateManyWithoutUserInput {
@@ -483,8 +591,8 @@ export interface VoteUpdateManyWithoutUserInput {
   deleteMany?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
 }
 
-export interface UserCreateOneWithoutLinksInput {
-  create?: Maybe<UserCreateWithoutLinksInput>;
+export interface UserCreateOneWithoutFlowersInput {
+  create?: Maybe<UserCreateWithoutFlowersInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
@@ -531,6 +639,20 @@ export interface UserWhereInput {
   email_not_starts_with?: Maybe<String>;
   email_ends_with?: Maybe<String>;
   email_not_ends_with?: Maybe<String>;
+  homeState?: Maybe<String>;
+  homeState_not?: Maybe<String>;
+  homeState_in?: Maybe<String[] | String>;
+  homeState_not_in?: Maybe<String[] | String>;
+  homeState_lt?: Maybe<String>;
+  homeState_lte?: Maybe<String>;
+  homeState_gt?: Maybe<String>;
+  homeState_gte?: Maybe<String>;
+  homeState_contains?: Maybe<String>;
+  homeState_not_contains?: Maybe<String>;
+  homeState_starts_with?: Maybe<String>;
+  homeState_not_starts_with?: Maybe<String>;
+  homeState_ends_with?: Maybe<String>;
+  homeState_not_ends_with?: Maybe<String>;
   password?: Maybe<String>;
   password_not?: Maybe<String>;
   password_in?: Maybe<String[] | String>;
@@ -545,9 +667,9 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
-  links_every?: Maybe<LinkWhereInput>;
-  links_some?: Maybe<LinkWhereInput>;
-  links_none?: Maybe<LinkWhereInput>;
+  flowers_every?: Maybe<FlowerWhereInput>;
+  flowers_some?: Maybe<FlowerWhereInput>;
+  flowers_none?: Maybe<FlowerWhereInput>;
   votes_every?: Maybe<VoteWhereInput>;
   votes_some?: Maybe<VoteWhereInput>;
   votes_none?: Maybe<VoteWhereInput>;
@@ -561,21 +683,24 @@ export interface VoteCreateManyWithoutUserInput {
   connect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
 }
 
-export interface LinkUpsertWithWhereUniqueWithoutPostedByInput {
-  where: LinkWhereUniqueInput;
-  update: LinkUpdateWithoutPostedByDataInput;
-  create: LinkCreateWithoutPostedByInput;
+export interface FlowerUpsertWithWhereUniqueWithoutPostedByInput {
+  where: FlowerWhereUniqueInput;
+  update: FlowerUpdateWithoutPostedByDataInput;
+  create: FlowerCreateWithoutPostedByInput;
 }
 
-export interface LinkCreateOneWithoutVotesInput {
-  create?: Maybe<LinkCreateWithoutVotesInput>;
-  connect?: Maybe<LinkWhereUniqueInput>;
+export interface FlowerCreateOneWithoutVotesInput {
+  create?: Maybe<FlowerCreateWithoutVotesInput>;
+  connect?: Maybe<FlowerWhereUniqueInput>;
 }
 
-export interface LinkUpdateWithoutPostedByDataInput {
+export interface FlowerUpdateWithoutPostedByDataInput {
+  name?: Maybe<String>;
+  color?: Maybe<String>;
+  location?: Maybe<String>;
   description?: Maybe<String>;
-  url?: Maybe<String>;
-  votes?: Maybe<VoteUpdateManyWithoutLinkInput>;
+  img?: Maybe<String>;
+  votes?: Maybe<VoteUpdateManyWithoutFlowerInput>;
 }
 
 export interface VoteSubscriptionWhereInput {
@@ -589,29 +714,33 @@ export interface VoteSubscriptionWhereInput {
   NOT?: Maybe<VoteSubscriptionWhereInput[] | VoteSubscriptionWhereInput>;
 }
 
-export interface LinkUpdateWithoutVotesDataInput {
+export interface FlowerUpdateWithoutVotesDataInput {
+  name?: Maybe<String>;
+  color?: Maybe<String>;
+  location?: Maybe<String>;
   description?: Maybe<String>;
-  url?: Maybe<String>;
-  postedBy?: Maybe<UserUpdateOneWithoutLinksInput>;
+  img?: Maybe<String>;
+  postedBy?: Maybe<UserUpdateOneWithoutFlowersInput>;
 }
 
 export interface VoteCreateInput {
   id?: Maybe<ID_Input>;
-  link: LinkCreateOneWithoutVotesInput;
+  flower: FlowerCreateOneWithoutVotesInput;
   user: UserCreateOneWithoutVotesInput;
 }
 
-export interface LinkUpsertWithoutVotesInput {
-  update: LinkUpdateWithoutVotesDataInput;
-  create: LinkCreateWithoutVotesInput;
+export interface FlowerUpsertWithoutVotesInput {
+  update: FlowerUpdateWithoutVotesDataInput;
+  create: FlowerCreateWithoutVotesInput;
 }
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  homeState: String;
   password: String;
-  links?: Maybe<LinkCreateManyWithoutPostedByInput>;
+  flowers?: Maybe<FlowerCreateManyWithoutPostedByInput>;
   votes?: Maybe<VoteCreateManyWithoutUserInput>;
 }
 
@@ -646,90 +775,95 @@ export interface VoteScalarWhereInput {
   NOT?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
 }
 
-export interface LinkCreateInput {
+export interface FlowerCreateInput {
   id?: Maybe<ID_Input>;
+  name: String;
+  color: String;
+  location: String;
   description: String;
-  url: String;
-  postedBy?: Maybe<UserCreateOneWithoutLinksInput>;
-  votes?: Maybe<VoteCreateManyWithoutLinkInput>;
+  img: String;
+  postedBy?: Maybe<UserCreateOneWithoutFlowersInput>;
+  votes?: Maybe<VoteCreateManyWithoutFlowerInput>;
 }
 
-export interface UserUpsertWithoutLinksInput {
-  update: UserUpdateWithoutLinksDataInput;
-  create: UserCreateWithoutLinksInput;
+export interface UserUpsertWithoutFlowersInput {
+  update: UserUpdateWithoutFlowersDataInput;
+  create: UserCreateWithoutFlowersInput;
 }
 
 export interface VoteCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
-  link: LinkCreateOneWithoutVotesInput;
+  flower: FlowerCreateOneWithoutVotesInput;
 }
 
-export interface VoteUpdateManyWithoutLinkInput {
-  create?: Maybe<VoteCreateWithoutLinkInput[] | VoteCreateWithoutLinkInput>;
+export interface VoteUpdateManyWithoutFlowerInput {
+  create?: Maybe<VoteCreateWithoutFlowerInput[] | VoteCreateWithoutFlowerInput>;
   delete?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
   connect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
   set?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
   disconnect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
   update?: Maybe<
-    | VoteUpdateWithWhereUniqueWithoutLinkInput[]
-    | VoteUpdateWithWhereUniqueWithoutLinkInput
+    | VoteUpdateWithWhereUniqueWithoutFlowerInput[]
+    | VoteUpdateWithWhereUniqueWithoutFlowerInput
   >;
   upsert?: Maybe<
-    | VoteUpsertWithWhereUniqueWithoutLinkInput[]
-    | VoteUpsertWithWhereUniqueWithoutLinkInput
+    | VoteUpsertWithWhereUniqueWithoutFlowerInput[]
+    | VoteUpsertWithWhereUniqueWithoutFlowerInput
   >;
   deleteMany?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
 }
 
-export interface LinkSubscriptionWhereInput {
+export interface FlowerSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<LinkWhereInput>;
-  AND?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
-  OR?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
-  NOT?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
+  node?: Maybe<FlowerWhereInput>;
+  AND?: Maybe<FlowerSubscriptionWhereInput[] | FlowerSubscriptionWhereInput>;
+  OR?: Maybe<FlowerSubscriptionWhereInput[] | FlowerSubscriptionWhereInput>;
+  NOT?: Maybe<FlowerSubscriptionWhereInput[] | FlowerSubscriptionWhereInput>;
 }
 
-export interface VoteUpdateWithWhereUniqueWithoutLinkInput {
+export interface VoteUpdateWithWhereUniqueWithoutFlowerInput {
   where: VoteWhereUniqueInput;
-  data: VoteUpdateWithoutLinkDataInput;
+  data: VoteUpdateWithoutFlowerDataInput;
 }
 
-export interface VoteUpsertWithWhereUniqueWithoutLinkInput {
+export interface VoteUpsertWithWhereUniqueWithoutFlowerInput {
   where: VoteWhereUniqueInput;
-  update: VoteUpdateWithoutLinkDataInput;
-  create: VoteCreateWithoutLinkInput;
+  update: VoteUpdateWithoutFlowerDataInput;
+  create: VoteCreateWithoutFlowerInput;
 }
 
-export interface LinkUpdateManyWithoutPostedByInput {
+export interface FlowerUpdateManyWithoutPostedByInput {
   create?: Maybe<
-    LinkCreateWithoutPostedByInput[] | LinkCreateWithoutPostedByInput
+    FlowerCreateWithoutPostedByInput[] | FlowerCreateWithoutPostedByInput
   >;
-  delete?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  connect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  set?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  disconnect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
+  delete?: Maybe<FlowerWhereUniqueInput[] | FlowerWhereUniqueInput>;
+  connect?: Maybe<FlowerWhereUniqueInput[] | FlowerWhereUniqueInput>;
+  set?: Maybe<FlowerWhereUniqueInput[] | FlowerWhereUniqueInput>;
+  disconnect?: Maybe<FlowerWhereUniqueInput[] | FlowerWhereUniqueInput>;
   update?: Maybe<
-    | LinkUpdateWithWhereUniqueWithoutPostedByInput[]
-    | LinkUpdateWithWhereUniqueWithoutPostedByInput
+    | FlowerUpdateWithWhereUniqueWithoutPostedByInput[]
+    | FlowerUpdateWithWhereUniqueWithoutPostedByInput
   >;
   upsert?: Maybe<
-    | LinkUpsertWithWhereUniqueWithoutPostedByInput[]
-    | LinkUpsertWithWhereUniqueWithoutPostedByInput
+    | FlowerUpsertWithWhereUniqueWithoutPostedByInput[]
+    | FlowerUpsertWithWhereUniqueWithoutPostedByInput
   >;
-  deleteMany?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
+  deleteMany?: Maybe<FlowerScalarWhereInput[] | FlowerScalarWhereInput>;
   updateMany?: Maybe<
-    LinkUpdateManyWithWhereNestedInput[] | LinkUpdateManyWithWhereNestedInput
+    | FlowerUpdateManyWithWhereNestedInput[]
+    | FlowerUpdateManyWithWhereNestedInput
   >;
 }
 
 export interface UserUpdateWithoutVotesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  homeState?: Maybe<String>;
   password?: Maybe<String>;
-  links?: Maybe<LinkUpdateManyWithoutPostedByInput>;
+  flowers?: Maybe<FlowerUpdateManyWithoutPostedByInput>;
 }
 
 export interface UserUpdateOneRequiredWithoutVotesInput {
@@ -739,13 +873,13 @@ export interface UserUpdateOneRequiredWithoutVotesInput {
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface VoteUpdateWithoutLinkDataInput {
+export interface VoteUpdateWithoutFlowerDataInput {
   user?: Maybe<UserUpdateOneRequiredWithoutVotesInput>;
 }
 
-export interface LinkUpdateManyWithWhereNestedInput {
-  where: LinkScalarWhereInput;
-  data: LinkUpdateManyDataInput;
+export interface FlowerUpdateManyWithWhereNestedInput {
+  where: FlowerScalarWhereInput;
+  data: FlowerUpdateManyDataInput;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -753,17 +887,21 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: Maybe<String>;
 }>;
 
-export interface LinkCreateWithoutVotesInput {
+export interface FlowerCreateWithoutVotesInput {
   id?: Maybe<ID_Input>;
+  name: String;
+  color: String;
+  location: String;
   description: String;
-  url: String;
-  postedBy?: Maybe<UserCreateOneWithoutLinksInput>;
+  img: String;
+  postedBy?: Maybe<UserCreateOneWithoutFlowersInput>;
 }
 
-export interface UserCreateWithoutLinksInput {
+export interface UserCreateWithoutFlowersInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
+  homeState: String;
   password: String;
   votes?: Maybe<VoteCreateManyWithoutUserInput>;
 }
@@ -809,31 +947,32 @@ export interface UserConnectionSubscription
   aggregate: <T = AggregateUserSubscription>() => T;
 }
 
-export interface LinkConnection {
+export interface FlowerConnection {
   pageInfo: PageInfo;
-  edges: LinkEdge[];
+  edges: FlowerEdge[];
 }
 
-export interface LinkConnectionPromise
-  extends Promise<LinkConnection>,
+export interface FlowerConnectionPromise
+  extends Promise<FlowerConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<LinkEdge>>() => T;
-  aggregate: <T = AggregateLinkPromise>() => T;
+  edges: <T = FragmentableArray<FlowerEdge>>() => T;
+  aggregate: <T = AggregateFlowerPromise>() => T;
 }
 
-export interface LinkConnectionSubscription
-  extends Promise<AsyncIterator<LinkConnection>>,
+export interface FlowerConnectionSubscription
+  extends Promise<AsyncIterator<FlowerConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LinkEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLinkSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<FlowerEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateFlowerSubscription>() => T;
 }
 
 export interface UserPreviousValues {
   id: ID_Output;
   name: String;
   email: String;
+  homeState: String;
   password: String;
 }
 
@@ -843,6 +982,7 @@ export interface UserPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
+  homeState: () => Promise<String>;
   password: () => Promise<String>;
 }
 
@@ -852,21 +992,22 @@ export interface UserPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
+  homeState: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateLink {
+export interface AggregateFlower {
   count: Int;
 }
 
-export interface AggregateLinkPromise
-  extends Promise<AggregateLink>,
+export interface AggregateFlowerPromise
+  extends Promise<AggregateFlower>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateLinkSubscription
-  extends Promise<AsyncIterator<AggregateLink>>,
+export interface AggregateFlowerSubscription
+  extends Promise<AsyncIterator<AggregateFlower>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -875,6 +1016,7 @@ export interface User {
   id: ID_Output;
   name: String;
   email: String;
+  homeState: String;
   password: String;
 }
 
@@ -882,10 +1024,11 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
+  homeState: () => Promise<String>;
   password: () => Promise<String>;
-  links: <T = FragmentableArray<Link>>(args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  flowers: <T = FragmentableArray<Flower>>(args?: {
+    where?: FlowerWhereInput;
+    orderBy?: FlowerOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -909,10 +1052,11 @@ export interface UserSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
+  homeState: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  links: <T = Promise<AsyncIterator<LinkSubscription>>>(args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  flowers: <T = Promise<AsyncIterator<FlowerSubscription>>>(args?: {
+    where?: FlowerWhereInput;
+    orderBy?: FlowerOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -936,10 +1080,11 @@ export interface UserNullablePromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
+  homeState: () => Promise<String>;
   password: () => Promise<String>;
-  links: <T = FragmentableArray<Link>>(args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  flowers: <T = FragmentableArray<Flower>>(args?: {
+    where?: FlowerWhereInput;
+    orderBy?: FlowerOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -973,20 +1118,20 @@ export interface AggregateVoteSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface LinkEdge {
-  node: Link;
+export interface FlowerEdge {
+  node: Flower;
   cursor: String;
 }
 
-export interface LinkEdgePromise extends Promise<LinkEdge>, Fragmentable {
-  node: <T = LinkPromise>() => T;
+export interface FlowerEdgePromise extends Promise<FlowerEdge>, Fragmentable {
+  node: <T = FlowerPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface LinkEdgeSubscription
-  extends Promise<AsyncIterator<LinkEdge>>,
+export interface FlowerEdgeSubscription
+  extends Promise<AsyncIterator<FlowerEdge>>,
     Fragmentable {
-  node: <T = LinkSubscription>() => T;
+  node: <T = FlowerSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
@@ -1059,7 +1204,7 @@ export interface Vote {
 
 export interface VotePromise extends Promise<Vote>, Fragmentable {
   id: () => Promise<ID_Output>;
-  link: <T = LinkPromise>() => T;
+  flower: <T = FlowerPromise>() => T;
   user: <T = UserPromise>() => T;
 }
 
@@ -1067,7 +1212,7 @@ export interface VoteSubscription
   extends Promise<AsyncIterator<Vote>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  link: <T = LinkSubscription>() => T;
+  flower: <T = FlowerSubscription>() => T;
   user: <T = UserSubscription>() => T;
 }
 
@@ -1075,72 +1220,87 @@ export interface VoteNullablePromise
   extends Promise<Vote | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  link: <T = LinkPromise>() => T;
+  flower: <T = FlowerPromise>() => T;
   user: <T = UserPromise>() => T;
 }
 
-export interface LinkPreviousValues {
+export interface FlowerPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
+  name: String;
+  color: String;
+  location: String;
   description: String;
-  url: String;
+  img: String;
 }
 
-export interface LinkPreviousValuesPromise
-  extends Promise<LinkPreviousValues>,
+export interface FlowerPreviousValuesPromise
+  extends Promise<FlowerPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  color: () => Promise<String>;
+  location: () => Promise<String>;
   description: () => Promise<String>;
-  url: () => Promise<String>;
+  img: () => Promise<String>;
 }
 
-export interface LinkPreviousValuesSubscription
-  extends Promise<AsyncIterator<LinkPreviousValues>>,
+export interface FlowerPreviousValuesSubscription
+  extends Promise<AsyncIterator<FlowerPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  name: () => Promise<AsyncIterator<String>>;
+  color: () => Promise<AsyncIterator<String>>;
+  location: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
-  url: () => Promise<AsyncIterator<String>>;
+  img: () => Promise<AsyncIterator<String>>;
 }
 
-export interface LinkSubscriptionPayload {
+export interface FlowerSubscriptionPayload {
   mutation: MutationType;
-  node: Link;
+  node: Flower;
   updatedFields: String[];
-  previousValues: LinkPreviousValues;
+  previousValues: FlowerPreviousValues;
 }
 
-export interface LinkSubscriptionPayloadPromise
-  extends Promise<LinkSubscriptionPayload>,
+export interface FlowerSubscriptionPayloadPromise
+  extends Promise<FlowerSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = LinkPromise>() => T;
+  node: <T = FlowerPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = LinkPreviousValuesPromise>() => T;
+  previousValues: <T = FlowerPreviousValuesPromise>() => T;
 }
 
-export interface LinkSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<LinkSubscriptionPayload>>,
+export interface FlowerSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<FlowerSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = LinkSubscription>() => T;
+  node: <T = FlowerSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = LinkPreviousValuesSubscription>() => T;
+  previousValues: <T = FlowerPreviousValuesSubscription>() => T;
 }
 
-export interface Link {
+export interface Flower {
   id: ID_Output;
   createdAt: DateTimeOutput;
+  name: String;
+  color: String;
+  location: String;
   description: String;
-  url: String;
+  img: String;
 }
 
-export interface LinkPromise extends Promise<Link>, Fragmentable {
+export interface FlowerPromise extends Promise<Flower>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  color: () => Promise<String>;
+  location: () => Promise<String>;
   description: () => Promise<String>;
-  url: () => Promise<String>;
+  img: () => Promise<String>;
   postedBy: <T = UserPromise>() => T;
   votes: <T = FragmentableArray<Vote>>(args?: {
     where?: VoteWhereInput;
@@ -1153,13 +1313,16 @@ export interface LinkPromise extends Promise<Link>, Fragmentable {
   }) => T;
 }
 
-export interface LinkSubscription
-  extends Promise<AsyncIterator<Link>>,
+export interface FlowerSubscription
+  extends Promise<AsyncIterator<Flower>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  name: () => Promise<AsyncIterator<String>>;
+  color: () => Promise<AsyncIterator<String>>;
+  location: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
-  url: () => Promise<AsyncIterator<String>>;
+  img: () => Promise<AsyncIterator<String>>;
   postedBy: <T = UserSubscription>() => T;
   votes: <T = Promise<AsyncIterator<VoteSubscription>>>(args?: {
     where?: VoteWhereInput;
@@ -1172,13 +1335,16 @@ export interface LinkSubscription
   }) => T;
 }
 
-export interface LinkNullablePromise
-  extends Promise<Link | null>,
+export interface FlowerNullablePromise
+  extends Promise<Flower | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  color: () => Promise<String>;
+  location: () => Promise<String>;
   description: () => Promise<String>;
-  url: () => Promise<String>;
+  img: () => Promise<String>;
   postedBy: <T = UserPromise>() => T;
   votes: <T = FragmentableArray<Vote>>(args?: {
     where?: VoteWhereInput;
@@ -1327,7 +1493,7 @@ export type Boolean = boolean;
 
 export const models: Model[] = [
   {
-    name: "Link",
+    name: "Flower",
     embedded: false
   },
   {

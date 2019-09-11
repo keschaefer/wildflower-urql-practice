@@ -3,7 +3,7 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateLink {
+/* GraphQL */ `type AggregateFlower {
   count: Int!
 }
 
@@ -21,79 +21,98 @@ type BatchPayload {
 
 scalar DateTime
 
-type Link {
+type Flower {
   id: ID!
   createdAt: DateTime!
+  name: String!
+  color: String!
+  location: String!
   description: String!
-  url: String!
+  img: String!
   postedBy: User
   votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote!]
 }
 
-type LinkConnection {
+type FlowerConnection {
   pageInfo: PageInfo!
-  edges: [LinkEdge]!
-  aggregate: AggregateLink!
+  edges: [FlowerEdge]!
+  aggregate: AggregateFlower!
 }
 
-input LinkCreateInput {
+input FlowerCreateInput {
   id: ID
+  name: String!
+  color: String!
+  location: String!
   description: String!
-  url: String!
-  postedBy: UserCreateOneWithoutLinksInput
-  votes: VoteCreateManyWithoutLinkInput
+  img: String!
+  postedBy: UserCreateOneWithoutFlowersInput
+  votes: VoteCreateManyWithoutFlowerInput
 }
 
-input LinkCreateManyWithoutPostedByInput {
-  create: [LinkCreateWithoutPostedByInput!]
-  connect: [LinkWhereUniqueInput!]
+input FlowerCreateManyWithoutPostedByInput {
+  create: [FlowerCreateWithoutPostedByInput!]
+  connect: [FlowerWhereUniqueInput!]
 }
 
-input LinkCreateOneWithoutVotesInput {
-  create: LinkCreateWithoutVotesInput
-  connect: LinkWhereUniqueInput
+input FlowerCreateOneWithoutVotesInput {
+  create: FlowerCreateWithoutVotesInput
+  connect: FlowerWhereUniqueInput
 }
 
-input LinkCreateWithoutPostedByInput {
+input FlowerCreateWithoutPostedByInput {
   id: ID
+  name: String!
+  color: String!
+  location: String!
   description: String!
-  url: String!
-  votes: VoteCreateManyWithoutLinkInput
+  img: String!
+  votes: VoteCreateManyWithoutFlowerInput
 }
 
-input LinkCreateWithoutVotesInput {
+input FlowerCreateWithoutVotesInput {
   id: ID
+  name: String!
+  color: String!
+  location: String!
   description: String!
-  url: String!
-  postedBy: UserCreateOneWithoutLinksInput
+  img: String!
+  postedBy: UserCreateOneWithoutFlowersInput
 }
 
-type LinkEdge {
-  node: Link!
+type FlowerEdge {
+  node: Flower!
   cursor: String!
 }
 
-enum LinkOrderByInput {
+enum FlowerOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  name_ASC
+  name_DESC
+  color_ASC
+  color_DESC
+  location_ASC
+  location_DESC
   description_ASC
   description_DESC
-  url_ASC
-  url_DESC
-  updatedAt_ASC	
-  updatedAt_DESC
+  img_ASC
+  img_DESC
 }
 
-type LinkPreviousValues {
+type FlowerPreviousValues {
   id: ID!
   createdAt: DateTime!
+  name: String!
+  color: String!
+  location: String!
   description: String!
-  url: String!
+  img: String!
 }
 
-input LinkScalarWhereInput {
+input FlowerScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -116,6 +135,48 @@ input LinkScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  color: String
+  color_not: String
+  color_in: [String!]
+  color_not_in: [String!]
+  color_lt: String
+  color_lte: String
+  color_gt: String
+  color_gte: String
+  color_contains: String
+  color_not_contains: String
+  color_starts_with: String
+  color_not_starts_with: String
+  color_ends_with: String
+  color_not_ends_with: String
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
   description: String
   description_not: String
   description_in: [String!]
@@ -130,113 +191,128 @@ input LinkScalarWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
-  url: String
-  url_not: String
-  url_in: [String!]
-  url_not_in: [String!]
-  url_lt: String
-  url_lte: String
-  url_gt: String
-  url_gte: String
-  url_contains: String
-  url_not_contains: String
-  url_starts_with: String
-  url_not_starts_with: String
-  url_ends_with: String
-  url_not_ends_with: String
-  AND: [LinkScalarWhereInput!]
-  OR: [LinkScalarWhereInput!]
-  NOT: [LinkScalarWhereInput!]
+  img: String
+  img_not: String
+  img_in: [String!]
+  img_not_in: [String!]
+  img_lt: String
+  img_lte: String
+  img_gt: String
+  img_gte: String
+  img_contains: String
+  img_not_contains: String
+  img_starts_with: String
+  img_not_starts_with: String
+  img_ends_with: String
+  img_not_ends_with: String
+  AND: [FlowerScalarWhereInput!]
+  OR: [FlowerScalarWhereInput!]
+  NOT: [FlowerScalarWhereInput!]
 }
 
-type LinkSubscriptionPayload {
+type FlowerSubscriptionPayload {
   mutation: MutationType!
-  node: Link
+  node: Flower
   updatedFields: [String!]
-  previousValues: LinkPreviousValues
+  previousValues: FlowerPreviousValues
 }
 
-input LinkSubscriptionWhereInput {
+input FlowerSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: LinkWhereInput
-  AND: [LinkSubscriptionWhereInput!]
-  OR: [LinkSubscriptionWhereInput!]
-  NOT: [LinkSubscriptionWhereInput!]
+  node: FlowerWhereInput
+  AND: [FlowerSubscriptionWhereInput!]
+  OR: [FlowerSubscriptionWhereInput!]
+  NOT: [FlowerSubscriptionWhereInput!]
 }
 
-input LinkUpdateInput {
+input FlowerUpdateInput {
+  name: String
+  color: String
+  location: String
   description: String
-  url: String
-  postedBy: UserUpdateOneWithoutLinksInput
-  votes: VoteUpdateManyWithoutLinkInput
+  img: String
+  postedBy: UserUpdateOneWithoutFlowersInput
+  votes: VoteUpdateManyWithoutFlowerInput
 }
 
-input LinkUpdateManyDataInput {
+input FlowerUpdateManyDataInput {
+  name: String
+  color: String
+  location: String
   description: String
-  url: String
+  img: String
 }
 
-input LinkUpdateManyMutationInput {
+input FlowerUpdateManyMutationInput {
+  name: String
+  color: String
+  location: String
   description: String
-  url: String
+  img: String
 }
 
-input LinkUpdateManyWithoutPostedByInput {
-  create: [LinkCreateWithoutPostedByInput!]
-  delete: [LinkWhereUniqueInput!]
-  connect: [LinkWhereUniqueInput!]
-  set: [LinkWhereUniqueInput!]
-  disconnect: [LinkWhereUniqueInput!]
-  update: [LinkUpdateWithWhereUniqueWithoutPostedByInput!]
-  upsert: [LinkUpsertWithWhereUniqueWithoutPostedByInput!]
-  deleteMany: [LinkScalarWhereInput!]
-  updateMany: [LinkUpdateManyWithWhereNestedInput!]
+input FlowerUpdateManyWithoutPostedByInput {
+  create: [FlowerCreateWithoutPostedByInput!]
+  delete: [FlowerWhereUniqueInput!]
+  connect: [FlowerWhereUniqueInput!]
+  set: [FlowerWhereUniqueInput!]
+  disconnect: [FlowerWhereUniqueInput!]
+  update: [FlowerUpdateWithWhereUniqueWithoutPostedByInput!]
+  upsert: [FlowerUpsertWithWhereUniqueWithoutPostedByInput!]
+  deleteMany: [FlowerScalarWhereInput!]
+  updateMany: [FlowerUpdateManyWithWhereNestedInput!]
 }
 
-input LinkUpdateManyWithWhereNestedInput {
-  where: LinkScalarWhereInput!
-  data: LinkUpdateManyDataInput!
+input FlowerUpdateManyWithWhereNestedInput {
+  where: FlowerScalarWhereInput!
+  data: FlowerUpdateManyDataInput!
 }
 
-input LinkUpdateOneRequiredWithoutVotesInput {
-  create: LinkCreateWithoutVotesInput
-  update: LinkUpdateWithoutVotesDataInput
-  upsert: LinkUpsertWithoutVotesInput
-  connect: LinkWhereUniqueInput
+input FlowerUpdateOneRequiredWithoutVotesInput {
+  create: FlowerCreateWithoutVotesInput
+  update: FlowerUpdateWithoutVotesDataInput
+  upsert: FlowerUpsertWithoutVotesInput
+  connect: FlowerWhereUniqueInput
 }
 
-input LinkUpdateWithoutPostedByDataInput {
+input FlowerUpdateWithoutPostedByDataInput {
+  name: String
+  color: String
+  location: String
   description: String
-  url: String
-  votes: VoteUpdateManyWithoutLinkInput
+  img: String
+  votes: VoteUpdateManyWithoutFlowerInput
 }
 
-input LinkUpdateWithoutVotesDataInput {
+input FlowerUpdateWithoutVotesDataInput {
+  name: String
+  color: String
+  location: String
   description: String
-  url: String
-  postedBy: UserUpdateOneWithoutLinksInput
+  img: String
+  postedBy: UserUpdateOneWithoutFlowersInput
 }
 
-input LinkUpdateWithWhereUniqueWithoutPostedByInput {
-  where: LinkWhereUniqueInput!
-  data: LinkUpdateWithoutPostedByDataInput!
+input FlowerUpdateWithWhereUniqueWithoutPostedByInput {
+  where: FlowerWhereUniqueInput!
+  data: FlowerUpdateWithoutPostedByDataInput!
 }
 
-input LinkUpsertWithoutVotesInput {
-  update: LinkUpdateWithoutVotesDataInput!
-  create: LinkCreateWithoutVotesInput!
+input FlowerUpsertWithoutVotesInput {
+  update: FlowerUpdateWithoutVotesDataInput!
+  create: FlowerCreateWithoutVotesInput!
 }
 
-input LinkUpsertWithWhereUniqueWithoutPostedByInput {
-  where: LinkWhereUniqueInput!
-  update: LinkUpdateWithoutPostedByDataInput!
-  create: LinkCreateWithoutPostedByInput!
+input FlowerUpsertWithWhereUniqueWithoutPostedByInput {
+  where: FlowerWhereUniqueInput!
+  update: FlowerUpdateWithoutPostedByDataInput!
+  create: FlowerCreateWithoutPostedByInput!
 }
 
-input LinkWhereInput {
+input FlowerWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -259,6 +335,48 @@ input LinkWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  color: String
+  color_not: String
+  color_in: [String!]
+  color_not_in: [String!]
+  color_lt: String
+  color_lte: String
+  color_gt: String
+  color_gte: String
+  color_contains: String
+  color_not_contains: String
+  color_starts_with: String
+  color_not_starts_with: String
+  color_ends_with: String
+  color_not_ends_with: String
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
   description: String
   description_not: String
   description_in: [String!]
@@ -273,42 +391,42 @@ input LinkWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
-  url: String
-  url_not: String
-  url_in: [String!]
-  url_not_in: [String!]
-  url_lt: String
-  url_lte: String
-  url_gt: String
-  url_gte: String
-  url_contains: String
-  url_not_contains: String
-  url_starts_with: String
-  url_not_starts_with: String
-  url_ends_with: String
-  url_not_ends_with: String
+  img: String
+  img_not: String
+  img_in: [String!]
+  img_not_in: [String!]
+  img_lt: String
+  img_lte: String
+  img_gt: String
+  img_gte: String
+  img_contains: String
+  img_not_contains: String
+  img_starts_with: String
+  img_not_starts_with: String
+  img_ends_with: String
+  img_not_ends_with: String
   postedBy: UserWhereInput
   votes_every: VoteWhereInput
   votes_some: VoteWhereInput
   votes_none: VoteWhereInput
-  AND: [LinkWhereInput!]
-  OR: [LinkWhereInput!]
-  NOT: [LinkWhereInput!]
+  AND: [FlowerWhereInput!]
+  OR: [FlowerWhereInput!]
+  NOT: [FlowerWhereInput!]
 }
 
-input LinkWhereUniqueInput {
+input FlowerWhereUniqueInput {
   id: ID
 }
 
 scalar Long
 
 type Mutation {
-  createLink(data: LinkCreateInput!): Link!
-  updateLink(data: LinkUpdateInput!, where: LinkWhereUniqueInput!): Link
-  updateManyLinks(data: LinkUpdateManyMutationInput!, where: LinkWhereInput): BatchPayload!
-  upsertLink(where: LinkWhereUniqueInput!, create: LinkCreateInput!, update: LinkUpdateInput!): Link!
-  deleteLink(where: LinkWhereUniqueInput!): Link
-  deleteManyLinks(where: LinkWhereInput): BatchPayload!
+  createFlower(data: FlowerCreateInput!): Flower!
+  updateFlower(data: FlowerUpdateInput!, where: FlowerWhereUniqueInput!): Flower
+  updateManyFlowers(data: FlowerUpdateManyMutationInput!, where: FlowerWhereInput): BatchPayload!
+  upsertFlower(where: FlowerWhereUniqueInput!, create: FlowerCreateInput!, update: FlowerUpdateInput!): Flower!
+  deleteFlower(where: FlowerWhereUniqueInput!): Flower
+  deleteManyFlowers(where: FlowerWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -340,9 +458,9 @@ type PageInfo {
 }
 
 type Query {
-  link(where: LinkWhereUniqueInput!): Link
-  links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link]!
-  linksConnection(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LinkConnection!
+  flower(where: FlowerWhereUniqueInput!): Flower
+  flowers(where: FlowerWhereInput, orderBy: FlowerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Flower]!
+  flowersConnection(where: FlowerWhereInput, orderBy: FlowerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FlowerConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -353,7 +471,7 @@ type Query {
 }
 
 type Subscription {
-  link(where: LinkSubscriptionWhereInput): LinkSubscriptionPayload
+  flower(where: FlowerSubscriptionWhereInput): FlowerSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   vote(where: VoteSubscriptionWhereInput): VoteSubscriptionPayload
 }
@@ -362,8 +480,9 @@ type User {
   id: ID!
   name: String!
   email: String!
+  homeState: String!
   password: String!
-  links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link!]
+  flowers(where: FlowerWhereInput, orderBy: FlowerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Flower!]
   votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote!]
 }
 
@@ -377,13 +496,14 @@ input UserCreateInput {
   id: ID
   name: String!
   email: String!
+  homeState: String!
   password: String!
-  links: LinkCreateManyWithoutPostedByInput
+  flowers: FlowerCreateManyWithoutPostedByInput
   votes: VoteCreateManyWithoutUserInput
 }
 
-input UserCreateOneWithoutLinksInput {
-  create: UserCreateWithoutLinksInput
+input UserCreateOneWithoutFlowersInput {
+  create: UserCreateWithoutFlowersInput
   connect: UserWhereUniqueInput
 }
 
@@ -392,10 +512,11 @@ input UserCreateOneWithoutVotesInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutLinksInput {
+input UserCreateWithoutFlowersInput {
   id: ID
   name: String!
   email: String!
+  homeState: String!
   password: String!
   votes: VoteCreateManyWithoutUserInput
 }
@@ -404,8 +525,9 @@ input UserCreateWithoutVotesInput {
   id: ID
   name: String!
   email: String!
+  homeState: String!
   password: String!
-  links: LinkCreateManyWithoutPostedByInput
+  flowers: FlowerCreateManyWithoutPostedByInput
 }
 
 type UserEdge {
@@ -420,18 +542,17 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
+  homeState_ASC
+  homeState_DESC
   password_ASC
   password_DESC
-  createdAt_ASC	
-  createdAt_DESC	
-  updatedAt_ASC	
-  updatedAt_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   name: String!
   email: String!
+  homeState: String!
   password: String!
 }
 
@@ -456,14 +577,16 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   name: String
   email: String
+  homeState: String
   password: String
-  links: LinkUpdateManyWithoutPostedByInput
+  flowers: FlowerUpdateManyWithoutPostedByInput
   votes: VoteUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
+  homeState: String
   password: String
 }
 
@@ -474,18 +597,19 @@ input UserUpdateOneRequiredWithoutVotesInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneWithoutLinksInput {
-  create: UserCreateWithoutLinksInput
-  update: UserUpdateWithoutLinksDataInput
-  upsert: UserUpsertWithoutLinksInput
+input UserUpdateOneWithoutFlowersInput {
+  create: UserCreateWithoutFlowersInput
+  update: UserUpdateWithoutFlowersDataInput
+  upsert: UserUpsertWithoutFlowersInput
   delete: Boolean
   disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutLinksDataInput {
+input UserUpdateWithoutFlowersDataInput {
   name: String
   email: String
+  homeState: String
   password: String
   votes: VoteUpdateManyWithoutUserInput
 }
@@ -493,13 +617,14 @@ input UserUpdateWithoutLinksDataInput {
 input UserUpdateWithoutVotesDataInput {
   name: String
   email: String
+  homeState: String
   password: String
-  links: LinkUpdateManyWithoutPostedByInput
+  flowers: FlowerUpdateManyWithoutPostedByInput
 }
 
-input UserUpsertWithoutLinksInput {
-  update: UserUpdateWithoutLinksDataInput!
-  create: UserCreateWithoutLinksInput!
+input UserUpsertWithoutFlowersInput {
+  update: UserUpdateWithoutFlowersDataInput!
+  create: UserCreateWithoutFlowersInput!
 }
 
 input UserUpsertWithoutVotesInput {
@@ -550,6 +675,20 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  homeState: String
+  homeState_not: String
+  homeState_in: [String!]
+  homeState_not_in: [String!]
+  homeState_lt: String
+  homeState_lte: String
+  homeState_gt: String
+  homeState_gte: String
+  homeState_contains: String
+  homeState_not_contains: String
+  homeState_starts_with: String
+  homeState_not_starts_with: String
+  homeState_ends_with: String
+  homeState_not_ends_with: String
   password: String
   password_not: String
   password_in: [String!]
@@ -564,9 +703,9 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  links_every: LinkWhereInput
-  links_some: LinkWhereInput
-  links_none: LinkWhereInput
+  flowers_every: FlowerWhereInput
+  flowers_some: FlowerWhereInput
+  flowers_none: FlowerWhereInput
   votes_every: VoteWhereInput
   votes_some: VoteWhereInput
   votes_none: VoteWhereInput
@@ -582,7 +721,7 @@ input UserWhereUniqueInput {
 
 type Vote {
   id: ID!
-  link: Link!
+  flower: Flower!
   user: User!
 }
 
@@ -594,12 +733,12 @@ type VoteConnection {
 
 input VoteCreateInput {
   id: ID
-  link: LinkCreateOneWithoutVotesInput!
+  flower: FlowerCreateOneWithoutVotesInput!
   user: UserCreateOneWithoutVotesInput!
 }
 
-input VoteCreateManyWithoutLinkInput {
-  create: [VoteCreateWithoutLinkInput!]
+input VoteCreateManyWithoutFlowerInput {
+  create: [VoteCreateWithoutFlowerInput!]
   connect: [VoteWhereUniqueInput!]
 }
 
@@ -608,14 +747,14 @@ input VoteCreateManyWithoutUserInput {
   connect: [VoteWhereUniqueInput!]
 }
 
-input VoteCreateWithoutLinkInput {
+input VoteCreateWithoutFlowerInput {
   id: ID
   user: UserCreateOneWithoutVotesInput!
 }
 
 input VoteCreateWithoutUserInput {
   id: ID
-  link: LinkCreateOneWithoutVotesInput!
+  flower: FlowerCreateOneWithoutVotesInput!
 }
 
 type VoteEdge {
@@ -626,10 +765,6 @@ type VoteEdge {
 enum VoteOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC	
-  createdAt_DESC	
-  updatedAt_ASC	
-  updatedAt_DESC
 }
 
 type VotePreviousValues {
@@ -675,18 +810,18 @@ input VoteSubscriptionWhereInput {
 }
 
 input VoteUpdateInput {
-  link: LinkUpdateOneRequiredWithoutVotesInput
+  flower: FlowerUpdateOneRequiredWithoutVotesInput
   user: UserUpdateOneRequiredWithoutVotesInput
 }
 
-input VoteUpdateManyWithoutLinkInput {
-  create: [VoteCreateWithoutLinkInput!]
+input VoteUpdateManyWithoutFlowerInput {
+  create: [VoteCreateWithoutFlowerInput!]
   delete: [VoteWhereUniqueInput!]
   connect: [VoteWhereUniqueInput!]
   set: [VoteWhereUniqueInput!]
   disconnect: [VoteWhereUniqueInput!]
-  update: [VoteUpdateWithWhereUniqueWithoutLinkInput!]
-  upsert: [VoteUpsertWithWhereUniqueWithoutLinkInput!]
+  update: [VoteUpdateWithWhereUniqueWithoutFlowerInput!]
+  upsert: [VoteUpsertWithWhereUniqueWithoutFlowerInput!]
   deleteMany: [VoteScalarWhereInput!]
 }
 
@@ -701,17 +836,17 @@ input VoteUpdateManyWithoutUserInput {
   deleteMany: [VoteScalarWhereInput!]
 }
 
-input VoteUpdateWithoutLinkDataInput {
+input VoteUpdateWithoutFlowerDataInput {
   user: UserUpdateOneRequiredWithoutVotesInput
 }
 
 input VoteUpdateWithoutUserDataInput {
-  link: LinkUpdateOneRequiredWithoutVotesInput
+  flower: FlowerUpdateOneRequiredWithoutVotesInput
 }
 
-input VoteUpdateWithWhereUniqueWithoutLinkInput {
+input VoteUpdateWithWhereUniqueWithoutFlowerInput {
   where: VoteWhereUniqueInput!
-  data: VoteUpdateWithoutLinkDataInput!
+  data: VoteUpdateWithoutFlowerDataInput!
 }
 
 input VoteUpdateWithWhereUniqueWithoutUserInput {
@@ -719,10 +854,10 @@ input VoteUpdateWithWhereUniqueWithoutUserInput {
   data: VoteUpdateWithoutUserDataInput!
 }
 
-input VoteUpsertWithWhereUniqueWithoutLinkInput {
+input VoteUpsertWithWhereUniqueWithoutFlowerInput {
   where: VoteWhereUniqueInput!
-  update: VoteUpdateWithoutLinkDataInput!
-  create: VoteCreateWithoutLinkInput!
+  update: VoteUpdateWithoutFlowerDataInput!
+  create: VoteCreateWithoutFlowerInput!
 }
 
 input VoteUpsertWithWhereUniqueWithoutUserInput {
@@ -746,7 +881,7 @@ input VoteWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  link: LinkWhereInput
+  flower: FlowerWhereInput
   user: UserWhereInput
   AND: [VoteWhereInput!]
   OR: [VoteWhereInput!]

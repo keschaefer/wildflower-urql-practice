@@ -1,12 +1,12 @@
-function newLinkSubscribe(parent, args, context, info) {
-  return context.prisma.$subscribe.link({ mutation_in: ['CREATED'] }).node()
+function newFlowerSubscribe(parent, args, context, info) {
+  return context.prisma.$subscribe.flower({ mutation_in: ['CREATED'] }).node()
 }
 
-const newLink = {
-  subscribe: newLinkSubscribe,
+const newFlower = {
+  subscribe: newFlowerSubscribe,
   resolve: payload => {
     return payload
-  },
+  }
 }
 
 function newVoteSubscribe(parent, args, context, info) {
@@ -17,10 +17,10 @@ const newVote = {
   subscribe: newVoteSubscribe,
   resolve: payload => {
     return payload
-  },
+  }
 }
 
 module.exports = {
-  newLink,
-  newVote,
+  newFlower,
+  newVote
 }

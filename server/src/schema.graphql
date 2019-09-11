@@ -2,10 +2,15 @@ scalar DateTime
 
 type Query {
   info: String!
-  feed(filter: String, skip: Int, first: Int, orderBy: LinkOrderByInput): Feed!
+  feed(
+    filter: String
+    skip: Int
+    first: Int
+    orderBy: FlowerOrderByInput
+  ): Feed!
 }
 
-enum LinkOrderByInput {
+enum FlowerOrderByInput {
   description_ASC
   description_DESC
   url_ASC
@@ -15,19 +20,30 @@ enum LinkOrderByInput {
 }
 
 type Feed {
-  links: [Link!]!
+  flowers: [Flower!]!
   count: Int!
 }
 
 type Mutation {
-  post(url: String!, description: String!): Link!
-  signup(email: String!, password: String!, name: String!): AuthPayload
+  post(
+    name: String!
+    color: String!
+    location: String!
+    description: String!
+    img: String
+  ): Flower!
+  signup(
+    email: String!
+    password: String!
+    name: String!
+    homeState: String
+  ): AuthPayload
   login(email: String!, password: String!): AuthPayload
-  vote(linkId: ID!): Vote!
+  vote(flowerId: ID!): Vote!
 }
 
 type Subscription {
-  newLink: Link
+  newFlower: Flower
   newVote: Vote
 }
 
@@ -40,20 +56,23 @@ type User {
   id: ID!
   name: String!
   email: String!
-  links: [Link!]!
+  flowers: [Flower!]!
 }
 
-type Link {
+type Flower {
   id: ID!
   createdAt: DateTime!
+  name: String!
+  color: String!
+  location: String!
   description: String!
-  url: String!
+  img: String!
   postedBy: User
   votes: [Vote!]!
 }
 
 type Vote {
   id: ID!
-  link: Link!
+  flower: Flower!
   user: User!
 }

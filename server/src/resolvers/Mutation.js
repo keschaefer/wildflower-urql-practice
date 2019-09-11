@@ -2,10 +2,13 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { APP_SECRET, getUserId } = require('../utils')
 
-function post(parent, { url, description }, context) {
+function post(parent, { name, color, location, img, description }, context) {
   // const userId = getUserId(context)
-  return context.prisma.createLink({
-    url,
+  return context.prisma.createFlower({
+    name,
+    color,
+    location,
+    img,
     description,
     postedBy: {
       // connect: {
@@ -23,7 +26,7 @@ async function signup(parent, args, context) {
 
   return {
     token,
-    user,
+    user
   }
 }
 
@@ -40,23 +43,23 @@ async function login(parent, args, context) {
 
   return {
     token: jwt.sign({ userId: user.id }, APP_SECRET),
-    user,
+    user
   }
 }
 
 async function vote(parent, args, context) {
   const userId = getUserId(context)
-  const linkExists = await context.prisma.$exists.vote({
+  const flowerExists = await context.prisma.$exists.vote({
     user: { id: userId },
-    link: { id: args.linkId },
+    flower: { id: args.flowerId }
   })
-  if (linkExists) {
-    throw new Error(`Already voted for link: ${args.linkId}`)
+  if (flowerExists) {
+    throw new Error(`Already voted for flower: ${args.flowerId}`)
   }
 
   return context.prisma.createVote({
     user: { connect: { id: userId } },
-    link: { connect: { id: args.linkId } },
+    flower: { connect: { id: args.flowerId } }
   })
 }
 
@@ -64,5 +67,5 @@ module.exports = {
   post,
   signup,
   login,
-  vote,
+  vote
 }

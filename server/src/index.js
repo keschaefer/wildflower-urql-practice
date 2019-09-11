@@ -4,7 +4,7 @@ const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const Subscription = require('./resolvers/Subscription')
 const User = require('./resolvers/User')
-const Link = require('./resolvers/Link')
+const Flower = require('./resolvers/Flower')
 const Vote = require('./resolvers/Vote')
 
 const resolvers = {
@@ -12,8 +12,8 @@ const resolvers = {
   Mutation,
   Subscription,
   User,
-  Link,
-  Vote,
+  Flower,
+  Vote
 }
 
 const server = new GraphQLServer({
@@ -21,7 +21,7 @@ const server = new GraphQLServer({
   resolvers,
   context: request => ({
     ...request,
-    prisma,
-  }),
+    prisma
+  })
 })
 server.start(() => console.log(`Server is running on http://localhost:4000`))

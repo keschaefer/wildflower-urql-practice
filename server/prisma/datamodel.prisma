@@ -1,8 +1,11 @@
-type Link {
+type Flower {
   id: ID! @id
   createdAt: DateTime! @createdAt
+  name: String!
+  color: String!
+  location: String!
   description: String!
-  url: String!
+  img: String!
   postedBy: User
   votes: [Vote!]!
 }
@@ -11,13 +14,14 @@ type User {
   id: ID! @id
   name: String!
   email: String! @unique
+  homeState: String!
   password: String!
-  links: [Link!]!
+  flowers: [Flower!]!
   votes: [Vote!]!
 }
 
 type Vote {
   id: ID! @id
-  link: Link!
+  flower: Flower!
   user: User!
 }
