@@ -1,5 +1,8 @@
 import React from 'react'
 import Main from './Main'
+import SignUp from './SignUp'
+import SignIn from './SignIn'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { Typography, Button, Toolbar, AppBar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -13,18 +16,29 @@ const useStyles = makeStyles({
 function App() {
   const classes = useStyles()
   return (
-    <div className="App">
-      <AppBar position="static">
-        <Toolbar className={classes.toolbar}>
-          <Typography variant="h6">Rocky Mountain Wildflowers</Typography>
-          <div>
-            <Button color="inherit">Sign In</Button>
-            <Button color="inherit">Sign Up</Button>
-          </div>
-        </Toolbar>
-      </AppBar>
-      <Main />
-    </div>
+    <Router>
+      <div className="App">
+        <AppBar position="static">
+          <Toolbar className={classes.toolbar}>
+            <Typography variant="h6">Rocky Mountain Wildflowers</Typography>
+            <div>
+              <Link to="/">
+                <Button>Home</Button>
+              </Link>
+              <Link to="/signin">
+                <Button>Sign In</Button>
+              </Link>
+              <Link to="/signup">
+                <Button>Sign Up</Button>
+              </Link>
+            </div>
+          </Toolbar>
+        </AppBar>
+        <Route path="/" exact component={Main} />
+        <Route path="/signin" component={SignIn} />
+        <Route path="/signup" component={SignUp} />
+      </div>
+    </Router>
   )
 }
 
