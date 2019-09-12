@@ -10,6 +10,7 @@ const useStyles = makeStyles({
 
 const SignUp = () => {
   const classes = useStyles()
+
   return (
     <Fragment>
       <h1>Sign Up for an Account</h1>
