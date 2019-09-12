@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   }
 })
 
-const FlowerCard = ({ name, color, img, location }) => {
+const FlowerCard = ({ name, color, img, location, description }) => {
   const classes = useStyles()
 
   return (
@@ -31,6 +31,7 @@ const FlowerCard = ({ name, color, img, location }) => {
           <Typography variant="h6">{name}</Typography>
           <Typography variant="body1">{color}</Typography>
           <Typography variant="body1">{location}</Typography>
+          <Typography variant="body2">{description}</Typography>
         </CardContent>
         <CardActions>
           <Button size="small">Delete</Button>

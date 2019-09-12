@@ -1,10 +1,10 @@
 async function feed(parent, args, context) {
   const count = await context.prisma
-    .flowers({
+    .flowersConnection({
       where: {
         OR: [
           { description_contains: args.filter },
-          { url_contains: args.filter }
+          { name_contains: args.filter }
         ]
       }
     })
@@ -12,7 +12,10 @@ async function feed(parent, args, context) {
     .count()
   const flowers = await context.prisma.flowers({
     where: {
-      OR: [{ name_contains: args.filter }, { img_contains: args.filter }]
+      OR: [
+        { name_contains: args.filter },
+        { description_contains: args.filter }
+      ]
     },
     skip: args.skip,
     first: args.first,

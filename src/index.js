@@ -10,7 +10,7 @@ const cache = cacheExchange({})
 const client = new Client({
   url: 'http://localhost:4000',
   exchanges: [dedupExchange, suspenseExchange, cache, fetchExchange],
-  suspense: true
+  suspense: false
 })
 
 ReactDOM.render(
