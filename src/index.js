@@ -5,6 +5,7 @@ import App from './components/App'
 import { Provider, Client, dedupExchange, fetchExchange } from 'urql'
 import { cacheExchange } from '@urql/exchange-graphcache'
 import { suspenseExchange } from '@urql/exchange-suspense'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const cache = cacheExchange({})
 const client = new Client({
@@ -14,9 +15,11 @@ const client = new Client({
 })
 
 ReactDOM.render(
-  <Provider value={client}>
-    <App />
-  </Provider>,
+  <Router>
+    <Provider value={client}>
+      <App />
+    </Provider>
+  </Router>,
   document.getElementById('root')
 )
 

@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { APP_SECRET, getUserId } = require('../utils')
 
-function post(parent, { name, color, location, img, description }, context) {
+function post(parent, { name, color, location, description, img }, context) {
   // const userId = getUserId(context)
   return context.prisma.createFlower({
     name,
