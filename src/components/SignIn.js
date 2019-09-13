@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback } from 'react'
 import { setToken } from '../token'
 import { useMutation } from 'urql'
 import { Formik, Field, Form } from 'formik'
@@ -12,41 +12,47 @@ const useStyles = makeStyles({
 })
 
 const SIGNIN_MUTATION = gql`
-  mutation signUpMutation($email: String!, $password: String!) {
+  mutation signInMutation($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
     }
   }
 `
 
-const SignIn = props => {
-  console.log({ props })
+const SignIn = ({ history }) => {
   const classes = useStyles()
-  // const [state, executeMutation] = useMutation(SIGNIN_MUTATION)
+  // const [isLogin, setIsLogin] = useState(true)
 
-  // const mutate = React.useCallback(() => {
-  //   executeMutation({ email, password, name }).then(({ data }) => {
-  //     const token = data && data[login].token
-  //     if (token) {
-  //       setToken(token)
-  //       history.pushState('/')
-  //     }
-  //   })
-  // })
+  const [state, executeMutation] = useMutation(SIGNIN_MUTATION)
+
+  const mutate = useCallback(
+    (email, password) => {
+      executeMutation({ email, password }).then(({ data }) => {
+        const token = data && data.login.token
+        if (token) {
+          setToken(token)
+          history.push('/')
+        }
+      })
+    },
+    [executeMutation, history]
+  )
   return (
     <Fragment>
       <h1>Sign In To Your Account</h1>
       <Formik
         initialValues={{ email: '', password: '' }}
-        onSubmit={(values, actions) => {
-          console.log({ values })
+        onSubmit={({ email, password }) => {
+          mutate(email, password)
         }}
         render={() => {
           return (
             <Form className={classes.form}>
               <Field type="email" name="email" placeholder="Email" />
               <Field type="password" name="password" placeholder="Password" />
-              <button type="submit">Submit</button>
+              <button disabled={state.fetching} type="submit">
+                Submit
+              </button>
             </Form>
           )
         }}

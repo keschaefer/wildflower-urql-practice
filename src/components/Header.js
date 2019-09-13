@@ -29,13 +29,13 @@ const Header = () => {
           )}
           {isLoggedIn ? (
             <div>
-              <button
+              <Button
                 onClick={() => {
                   deleteToken()
                 }}
               >
                 Sign Out
-              </button>
+              </Button>
             </div>
           ) : (
             <Link to="/signin">

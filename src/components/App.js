@@ -6,7 +6,7 @@ import SignIn from './SignIn'
 import AddFlower from './AddFlower'
 import { Route, Switch } from 'react-router-dom'
 
-const App = props => {
+const App = () => {
   return (
     <div className="App">
       <Header />
