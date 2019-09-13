@@ -1,5 +1,6 @@
-import React, { useState, useCallback, Fragment } from 'react'
+import React, { useCallback, Fragment } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { Formik, Field, Form } from 'formik'
 import gql from 'graphql-tag'
 import { useMutation } from 'urql'
 
@@ -60,75 +61,96 @@ const POST_MUTATION = gql`
 const AddFlower = ({ history }) => {
   const classes = useStyles()
 
-  const [name, setName] = useState('')
-  const [color, setColor] = useState('')
-  const [location, setLocation] = useState('')
-  const [description, setDescription] = useState('')
-  const [img, setImg] = useState('')
   const [state, exectuteMutation] = useMutation(POST_MUTATION)
 
-  const submit = useCallback(() => {
-    exectuteMutation({ name, color, location, description, img }).then(() => {
-      history.push('/')
-    })
-  }, [exectuteMutation, name, color, location, description, img, history])
+  const submit = useCallback(
+    (name, color, location, description, img) => {
+      exectuteMutation({ name, color, location, description, img }).then(() => {
+        history.push('/')
+      })
+      console.log(img, 'IMAGE')
+    },
+    [exectuteMutation, history]
+  )
+
+  const uploadFile = async e => {
+    console.log(e.target.files[0])
+    const files = e.target.files
+    const data = new FormData()
+    data.append('file', files[0])
+    data.append('upload_preset', 'rockyMountainWildflowers')
+
+    const res = await fetch(
+      'https://api.cloudinary.com/v1_1/keschaefer/image/upload',
+      {
+        method: 'POST',
+        body: data
+      }
+    )
+    const file = await res.json()
+    return file
+  }
 
   return (
     <Fragment>
-      <form className={classes.form}>
-        <input
-          className={classes.input}
-          value={name}
-          onChange={e => {
-            setName(e.target.value)
-          }}
-          type="text"
-          placeholder="Name of flower"
-        />
-        <input
-          className={classes.input}
-          value={color}
-          onChange={e => {
-            setColor(e.target.value)
-          }}
-          type="text"
-          placeholder="Color of flower"
-        />
-        <input
-          className={classes.input}
-          value={location}
-          onChange={e => {
-            setLocation(e.target.value)
-          }}
-          type="text"
-          placeholder="Where did you see this flower"
-        />
-        <input
-          className={classes.input}
-          value={description}
-          onChange={e => {
-            setDescription(e.target.value)
-          }}
-          type="text"
-          placeholder="Describe this flower"
-        />
-        <input
-          className={classes.input}
-          value={img}
-          onChange={e => {
-            setImg(e.target.value)
-          }}
-          type="text"
-          placeholder="Image URL"
-        />
-        <button
-          className={classes.button}
-          disabled={state.fetching}
-          onClick={submit}
-        >
-          Submit
-        </button>
-      </form>
+      <h1>Add a New Flower</h1>
+      <Formik
+        initialValues={{
+          name: '',
+          color: '',
+          location: '',
+          description: '',
+          img: ''
+        }}
+        onSubmit={({ name, color, location, description, img }) => {
+          submit(name, color, location, description, img)
+        }}
+        render={({ setFieldValue }) => {
+          return (
+            <Form className={classes.form}>
+              <Field
+                className={classes.input}
+                type="input"
+                name="name"
+                placeholder="Name of flower"
+              />
+              <Field
+                className={classes.input}
+                type="input"
+                name="color"
+                placeholder="Color of flower"
+              />
+              <Field
+                className={classes.input}
+                type="input"
+                name="location"
+                placeholder="Where did you see this flower"
+              />
+              <Field
+                className={classes.input}
+                type="input"
+                name="description"
+                placeholder="Describe this flower"
+              />
+              <Field
+                className={classes.input}
+                type="file"
+                name="img"
+                onChange={e => {
+                  setFieldValue(uploadFile(e))
+                }}
+              />
+              <button
+                className={classes.button}
+                disabled={state.fetching}
+                type="submit"
+              >
+                Create
+              </button>
+            </Form>
+          )
+        }}
+      />
     </Fragment>
   )
 }
