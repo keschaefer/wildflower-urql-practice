@@ -68,7 +68,6 @@ const AddFlower = ({ history }) => {
       exectuteMutation({ name, color, location, description, img }).then(() => {
         history.push('/')
       })
-      console.log(img, 'IMAGE')
     },
     [exectuteMutation, history]
   )
@@ -136,9 +135,9 @@ const AddFlower = ({ history }) => {
                 className={classes.input}
                 type="file"
                 name="img"
-                onChange={e => {
-                  setFieldValue(uploadFile(e))
-                }}
+                // onChange={e => {
+                //   setFieldValue(uploadFile(e))
+                // }}
               />
               <button
                 className={classes.button}

@@ -14,6 +14,16 @@ const FETCHFLOWERS_QUERY = gql`
         location
         description
         img
+        postedBy {
+          id
+          name
+        }
+        votes {
+          id
+          user {
+            id
+          }
+        }
       }
     }
   }
@@ -33,13 +43,17 @@ const Main = () => {
       <Grid container spacing={5}>
         {flowerList.map(flower => {
           return (
-            <Grid key={flower.name} item xs={4}>
+            <Grid key={flower.id} item xs={4}>
               <FlowerCard
                 name={flower.name}
                 color={flower.color}
                 location={flower.location}
                 description={flower.description}
                 img={flower.img}
+                votes={flower.votes}
+                createdAt={flower.createdAt}
+                postedBy={flower.postedBy}
+                id={flower.id}
               />
             </Grid>
           )

@@ -27,6 +27,9 @@ const Header = () => {
               <Button>Add Flower</Button>
             </Link>
           )}
+          <Link to="/search">
+            <Button>SEARCH</Button>
+          </Link>
           {isLoggedIn ? (
             <div>
               <Button
